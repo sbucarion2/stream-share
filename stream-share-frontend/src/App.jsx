@@ -1,10 +1,10 @@
-import VideoPlayer from './video-app';
+import HomePage from './home-page-app';
 
 function App () {
   return (
     <div>
       <h1>Hello</h1>
-      <VideoPlayer />
+      <HomePage />
     </div>
   )
 }
