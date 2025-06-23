@@ -1,5 +1,6 @@
 import { useEffect, useState, useSyncExternalStore } from 'react';
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 
 function HomePage () {
@@ -17,17 +18,22 @@ function HomePage () {
             console.log(err)
         }
     }
+    
+    const navigate = useNavigate()
+    const addVideoClick = () => {navigate('/upload')};
 
     return (
     <>
         <div>
             <h1>Home Page App</h1>
         </div>
+        <button onClick={addVideoClick}>Add Video</button>
         <div>
         {videos.map((video) => (
             <div style={{ backgroundColor: 'blue', fontSize: '16px', padding: '8px', margin: '20px' }}>
                 <p>Title: {video.name}</p>
-                <p>Description: {video.thumbnail_location}</p>
+                <img src='http://localhost/media/test_movie/thumbnail.jpg'/>
+                {/* <img src='file:///'+{video.thumbnail_location}/> */}
             </div>
         ))}
         </div>
