@@ -9,3 +9,7 @@ class Videos(models.Model):
 
     thumbnail_location = models.CharField(max_length=1000)
     video_location = models.CharField(max_length=1000)
+
+    test_record = models.BooleanField()
+
+    # upload = models.FileField(upload_to=user_directory_path)
