@@ -1,7 +1,7 @@
 import { useEffect, useState, useSyncExternalStore } from 'react';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-
+import './home.css'
 
 function HomePage () {
 
@@ -11,7 +11,7 @@ function HomePage () {
 
     const fetchVideos = async () => {
         try {
-            const response = await fetch("http://127.0.0.1:8000/api/videos/")
+            const response = await fetch(import.meta.env.VITE_ALL_VIDEOS_API_URL)
             const data = await response.json()
             SetVideos(data);
         } catch (err) {
@@ -21,6 +21,7 @@ function HomePage () {
     
     const navigate = useNavigate()
     const addVideoClick = () => {navigate('/upload')};
+    const gotoVideo = (id) => {navigate('/videos/' + id)}
 
     return (
     <>
@@ -28,14 +29,20 @@ function HomePage () {
             <h1>Home Page App</h1>
         </div>
         <button onClick={addVideoClick}>Add Video</button>
-        <div>
-        {videos.map((video) => (
-            <div style={{ backgroundColor: 'blue', fontSize: '16px', padding: '8px', margin: '20px' }}>
-                <p>Title: {video.name}</p>
-                <img src='http://localhost/media/test_movie/thumbnail.jpg'/>
-                {/* <img src='file:///'+{video.thumbnail_location}/> */}
-            </div>
-        ))}
+        <div style={{ backgroundColor: 'black', padding: '20px' }} className="container" name='movie-table'>
+            {videos.map((video) => (
+                <div style={{ 
+                        backgroundColor: 'black', 
+                        fontSize: '16px', 
+                        padding: '8px', 
+                        margin: '20px' }}>
+                    <p>{video.name}</p>
+                    <img src={video.thumbnail_location} 
+                        width="350" 
+                        height="500" 
+                        onClick={() => gotoVideo(video.id)}/>
+                </div>
+            ))}
         </div>
     </>
     );

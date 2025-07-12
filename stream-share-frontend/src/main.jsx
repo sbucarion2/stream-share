@@ -4,10 +4,12 @@ import App from './App'
 import AddVideo from './add-video-app'
 import './index.css'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import VideoPlayer from './video-app'
 
 const router = createBrowserRouter([
   {path: '/', element: <App />},
-  {path: '/upload', element: <AddVideo />}
+  {path: '/upload', element: <AddVideo />},
+  {path: '/videos/:id', element: <VideoPlayer />}
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(

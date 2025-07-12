@@ -3,41 +3,73 @@ import axios from 'axios'
 
 function AddVideo () {
 
-    const [filename, setFilename] = useState('')
-    const [files, setFiles] = useState([{}])
-    const [status, setstatus] = useState('')
+    const [movieData, setFormData] = useState({
+        name: '',
+        description: '',
+        language: '',
+        thumbnail_location: '',
+        video_location: ''
+    })
 
-    // let api = 'http://127.0.0.1:8000/api'
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData(prevFormData => ({
+            ...prevFormData, // Spread operator to copy original form data to new object
+            [name]: value
+        }));
+    };
 
-    const saveFile = () =>{
-        console.log('Button clicked')
+    const handleSubmit = async (e) => {
+        e.preventDefault();
 
-        let formData = new FormData();
-        formData.append("pdf", filename)
-
-        let axiosConfig = {
-            headers: {
-                'Content-Type': 'multpart/form-data'
-            }
+        const movieDataPayLoad = {
+            ...movieData,
+            test_record: false
         }
 
-        console.log(formData)
-        axios.post(api + '/files/', formData, axiosConfig).then(
-            response =>{
-                console.log(response)
-                setstatus('File Uploaded Successfully')
+        try {
+            const response = await axios.post(import.meta.env.VITE_ADD_VIDEO_API_URL, movieDataPayLoad);
+            // const response = await axios.post('http://192.168.1.224:8000/api/add_video/', movieDataPayLoad);
+            alert('movie added');
+            } catch (error) {
+                console.error('Error:', error.response?.data || error.message);
+                alert('movie failed to upload - check console');
             }
-        ).catch(error =>{
-            console.log(error)
-        })
-    }
+    };
 
     return (
         <>
         <div>
             <h1>Video Submission Form</h1>
         </div>
-        <form >
+        <div>
+            <form className="contact-form" onSubmit={handleSubmit}>
+            {/* <form className="contact-form"> */}
+                <h2>Contact Us</h2>
+                <label>
+                    Name:
+                    <input type="text" name="name" value={movieData.name} onChange={handleChange} required />
+                </label>
+                <label>
+                    Description:
+                    <input name="description" value={movieData.description} onChange={handleChange} required />
+                </label>
+                <label>
+                    Language:
+                    <textarea name="language" value={movieData.language} onChange={handleChange} required />
+                </label>
+                <label>
+                    Thumbnail Path:
+                    <textarea name="thumbnail_location" value={movieData.thumbnail_location} onChange={handleChange} required />
+                </label>
+                <label>
+                    Video Path:
+                    <textarea name="video_location" value={movieData.video_location} onChange={handleChange} required />
+                </label>
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+        {/* <form >
         <div className="form-group">
         <label htmlFor="exampleFormControlFile1" className="float-left">Browse A File To Upload</label>
         <input type="file" onChange={e => setFilename(e.target.files[0])} className="form-control" />
@@ -50,7 +82,7 @@ function AddVideo () {
 
         {status ? <h2>{status}</h2>:null}
 
-        </form>
+        </form> */}
         </>
     );
 };
