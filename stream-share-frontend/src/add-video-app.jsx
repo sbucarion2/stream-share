@@ -29,7 +29,6 @@ function AddVideo () {
 
         try {
             const response = await axios.post(import.meta.env.VITE_ADD_VIDEO_API_URL, movieDataPayLoad);
-            // const response = await axios.post('http://192.168.1.224:8000/api/add_video/', movieDataPayLoad);
             alert('movie added');
             } catch (error) {
                 console.error('Error:', error.response?.data || error.message);
