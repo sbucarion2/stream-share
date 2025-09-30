@@ -38,8 +38,8 @@ function HomePage () {
                         margin: '20px' }}>
                     <p>{video.name}</p>
                     <img src={video.thumbnail_location} 
-                        width="350" 
-                        height="500" 
+                        width="450" 
+                        height="800" 
                         onClick={() => gotoVideo(video.id)}/>
                 </div>
             ))}
